@@ -1,0 +1,5 @@
+Ticker jQuery plugin
+
+Continuous ticker, scrolls left to right
+
+Try to keep css and html dependencies minimal
