@@ -42,8 +42,8 @@
     // the options via the instance, e.g. this.element
     // and this.options
 
-		var ticker = $(this.element);
-		ticker.wrap('<div class="ticker-mask" />');
+    var ticker = $(this.element);
+    ticker.wrap('<div class="ticker-mask" />');
 
     var mask = ticker.parent();
     mask.css('position', 'relative');
@@ -63,7 +63,7 @@
     ticker.css('width', total_ticker_el_width + 'px');
     console.log(total_ticker_el_width );
 
-		// set the height of the ticker mask
+    // set the height of the ticker mask
     var firstTickerItem = ticker.children().eq(0);
     this.firstItemWidth = firstTickerItem.outerWidth() + parseInt(firstTickerItem.css('marginLeft')) + parseInt(firstTickerItem.css('marginRight'));
 
@@ -72,10 +72,10 @@
     mask.css('height', tickerHeight + 'px');
 
     if (this.tickerWidth) {
-    	mask.css('width', this.tickerWidth + 'px');
+      mask.css('width', this.tickerWidth + 'px');
     }
     else {
-    	mask.css('width', (total_ticker_el_width - 2*this.firstItemWidth) + 'px');
+      mask.css('width', (total_ticker_el_width - 2*this.firstItemWidth) + 'px');
     }
 
     // hover behaviours and start scrolling
@@ -90,12 +90,12 @@
 
   };
 
-	// scroll the ticker
+  // scroll the ticker
   Plugin.prototype.scroll = function() {
     this.currLeft += this.increment;
 
     // if first item has moved across enough then append it to end of list
-		if (this.currLeft < (this.firstItemWidth * -1) - this.pixelBuffer) {
+    if (this.currLeft < (this.firstItemWidth * -1) - this.pixelBuffer) {
       var item = $(this.element).children("li").eq(0).remove();
       $(this.element).append(item);
       this.currLeft += this.firstItemWidth;
