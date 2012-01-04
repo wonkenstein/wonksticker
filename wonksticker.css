@@ -1,0 +1,39 @@
+/**/
+
+/*
+.mask {
+ position:relative;
+ width:280px;
+ overflow:hidden;
+ background-color:#000;
+}
+
+#ticker-content .ticker-fade {
+   top:7px;
+  width:20px;
+  height:34px;
+  position:absolute;
+}
+
+#ticker-content .ticker-fade.left {
+  background-position:top right;
+
+}
+
+#ticker-content .ticker-fade.right {
+  background-position:top left;
+  right:0;
+}
+
+#ticker-content ul {
+  overflow:hidden;
+  position:absolute;
+  padding-top:18px;
+}
+#ticker-content li {
+  float:left;
+  padding-right:40px;
+  list-style-type:none;
+  font-size:13px;
+}
+ */
