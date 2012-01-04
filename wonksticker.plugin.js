@@ -6,7 +6,8 @@
     defaults = {
       increment : -3,
       speed : 50,
-      pixelBuffer : 20
+      pixelBuffer : 30,
+      tickerWidth: 0,
     };
 
   // The actual plugin constructor
@@ -25,13 +26,12 @@
 
     this.increment = this.options.increment;
     this.speed = this.options.speed;
-    this.pixelBuffer = this.options.pixelBuffer;
+    this.pixelBuffer = this.options.pixelBuffer; // should be width of largest element
+    this.tickerWidth = this.options.tickerWidth;
 
     this.currLeft = 0;
     this.tickerInterval = 0;
     this.firstItemWidth = 0;
-
-    this.maskBufferWidth = 60;
 
     this.init();
   }
@@ -41,24 +41,42 @@
     // You already have access to the DOM element and
     // the options via the instance, e.g. this.element
     // and this.options
-console.log('fsafs');
-/*
-    // calculate the width that the mask should be
-    var ticker_title = $('#ticker-title');
-    var ticker_end = $('#ticker-end');
 
-    var mask_width = $(document).width() - (this.maskBufferWidth + ticker_title.width() + ticker_end.width());
-    $('.mask').css('width', mask_width + 'px');
+		var ticker = $(this.element);
+		ticker.wrap('<div class="ticker-mask" />');
+
+    var mask = ticker.parent();
+    mask.css('position', 'relative');
+    mask.css('overflow', 'hidden');
+
+    ticker.css('position', 'absolute');
+    ticker.css('margin', '0');
+    ticker.css('padding', '0');
 
 
     // calculate the width of the ticker elements
     var total_ticker_el_width = 0;
-    $('.mask li').each(function(i){
-      total_ticker_el_width += $(this).outerWidth();
+    $('li', ticker).each(function(i){
+      total_ticker_el_width += $(this).outerWidth()+ parseInt($(this).css('marginLeft')) + parseInt($(this).css('marginRight'));
     });
     total_ticker_el_width += this.pixelBuffer // add on buffer so IE behaves
-    $('.mask ul').css('width', total_ticker_el_width + 'px');
+    ticker.css('width', total_ticker_el_width + 'px');
+    console.log(total_ticker_el_width );
 
+		// set the height of the ticker mask
+    var firstTickerItem = ticker.children().eq(0);
+    this.firstItemWidth = firstTickerItem.outerWidth() + parseInt(firstTickerItem.css('marginLeft')) + parseInt(firstTickerItem.css('marginRight'));
+
+    console.log('this.firstItemWidth ' + this.firstItemWidth );
+    var tickerHeight = firstTickerItem.outerHeight();
+    mask.css('height', tickerHeight + 'px');
+
+    if (this.tickerWidth) {
+    	mask.css('width', this.tickerWidth + 'px');
+    }
+    else {
+    	mask.css('width', (total_ticker_el_width - 2*this.firstItemWidth) + 'px');
+    }
 
     // hover behaviours and start scrolling
     var thisObj = this;
@@ -69,20 +87,24 @@ console.log('fsafs');
     });
 
     this.startScrolling();
-*/
+
   };
 
-  // ported from cmc.core.js
+	// scroll the ticker
   Plugin.prototype.scroll = function() {
     this.currLeft += this.increment;
 
-    if (this.currLeft < (this.firstItemWidth * -1) - this.pixelBuffer) {
-      var jFirst = $(this.element).children("li").eq(0).remove();
-      $(this.element).append(jFirst);
+    // if first item has moved across enough then append it to end of list
+		if (this.currLeft < (this.firstItemWidth * -1) - this.pixelBuffer) {
+      var item = $(this.element).children("li").eq(0).remove();
+      $(this.element).append(item);
       this.currLeft += this.firstItemWidth;
-      this.firstItemWidth = parseInt($(this.element).children("li").eq(0).outerWidth())
+      this.firstItemWidth = item.outerWidth() + parseInt(item.css('marginLeft')) + parseInt(item.css('marginRight'));
     }
+
+    // shift the ticker across
     $(this.element).css("left", this.currLeft + "px");
+
   };
 
   //
