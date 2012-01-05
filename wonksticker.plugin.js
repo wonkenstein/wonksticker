@@ -6,7 +6,7 @@
     defaults = {
       increment : -3,
       speed : 50,
-      pixelBuffer : 30,
+      tickerBuffer : 30,
       tickerWidth: 0,
     };
 
@@ -26,7 +26,7 @@
 
     this.increment = this.options.increment;
     this.speed = this.options.speed;
-    this.pixelBuffer = this.options.pixelBuffer;
+    this.tickerBuffer = this.options.tickerBuffer;
     this.tickerWidth = this.options.tickerWidth;
 
     this.currLeft = 0;
@@ -57,7 +57,7 @@
     $('li', ticker).each(function(i){
       total_ticker_el_width += thisObj._getElementWidth($(this));
     });
-    total_ticker_el_width += this.pixelBuffer // add on buffer so IE behaves
+    total_ticker_el_width += this.tickerBuffer // add on buffer so IE behaves
     ticker.css('width', total_ticker_el_width + 'px');
 
 
@@ -91,7 +91,7 @@
     this.currLeft += this.increment;
 
     // if first item has moved across enough then append it to end of list
-    if (this.currLeft < (this.firstItemWidth * -1) - this.pixelBuffer) {
+    if (this.currLeft < (this.firstItemWidth * -1) - this.tickerBuffer) {
       var item = $(this.element).children("li").eq(0).remove();
       $(this.element).append(item);
       this.currLeft += this.firstItemWidth;
