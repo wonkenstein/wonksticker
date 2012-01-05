@@ -26,7 +26,7 @@
 
     this.increment = this.options.increment;
     this.speed = this.options.speed;
-    this.pixelBuffer = this.options.pixelBuffer; // should be width of largest element
+    this.pixelBuffer = this.options.pixelBuffer;
     this.tickerWidth = this.options.tickerWidth;
 
     this.currLeft = 0;
@@ -37,40 +37,35 @@
   }
 
   Plugin.prototype.init = function () {
-    // Place initialization logic here
-    // You already have access to the DOM element and
-    // the options via the instance, e.g. this.element
-    // and this.options
 
     var ticker = $(this.element);
+
+    // set up ticker html and css
     ticker.wrap('<div class="ticker-mask" />');
-
-    var mask = ticker.parent();
-    mask.css('position', 'relative');
-    mask.css('overflow', 'hidden');
-
     ticker.css('position', 'absolute');
     ticker.css('margin', '0');
     ticker.css('padding', '0');
 
+		// set up ticker mask css
+    var mask = ticker.parent();
+    mask.css('position', 'relative');
+    mask.css('overflow', 'hidden');
 
-    // calculate the width of the ticker elements
+    // calculate and set how wide the ticker should be
     var total_ticker_el_width = 0;
     $('li', ticker).each(function(i){
       total_ticker_el_width += $(this).outerWidth()+ parseInt($(this).css('marginLeft')) + parseInt($(this).css('marginRight'));
     });
     total_ticker_el_width += this.pixelBuffer // add on buffer so IE behaves
     ticker.css('width', total_ticker_el_width + 'px');
-    console.log(total_ticker_el_width );
 
-    // set the height of the ticker mask
+
+    // set dimensions the ticker mask
     var firstTickerItem = ticker.children().eq(0);
     this.firstItemWidth = firstTickerItem.outerWidth() + parseInt(firstTickerItem.css('marginLeft')) + parseInt(firstTickerItem.css('marginRight'));
 
-    console.log('this.firstItemWidth ' + this.firstItemWidth );
     var tickerHeight = firstTickerItem.outerHeight();
     mask.css('height', tickerHeight + 'px');
-
     if (this.tickerWidth) {
       mask.css('width', this.tickerWidth + 'px');
     }
@@ -87,8 +82,8 @@
     });
 
     this.startScrolling();
-
   };
+
 
   // scroll the ticker
   Plugin.prototype.scroll = function() {
@@ -107,6 +102,7 @@
 
   };
 
+
   //
   Plugin.prototype.startScrolling = function() {
     this.scroll();
@@ -116,6 +112,7 @@
       thisObj.scroll()
     }, this.speed)
   };
+
 
   //
   Plugin.prototype.stopScrolling = function() {
