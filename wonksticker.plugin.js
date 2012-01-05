@@ -39,6 +39,7 @@
   Plugin.prototype.init = function () {
 
     var ticker = $(this.element);
+    var thisObj = this;
 
     // set up ticker html and css
     ticker.wrap('<div class="ticker-mask" />');
@@ -54,7 +55,7 @@
     // calculate and set how wide the ticker should be
     var total_ticker_el_width = 0;
     $('li', ticker).each(function(i){
-      total_ticker_el_width += $(this).outerWidth()+ parseInt($(this).css('marginLeft')) + parseInt($(this).css('marginRight'));
+      total_ticker_el_width += thisObj._getElementWidth($(this));
     });
     total_ticker_el_width += this.pixelBuffer // add on buffer so IE behaves
     ticker.css('width', total_ticker_el_width + 'px');
@@ -62,7 +63,7 @@
 
     // set dimensions the ticker mask
     var firstTickerItem = ticker.children().eq(0);
-    this.firstItemWidth = firstTickerItem.outerWidth() + parseInt(firstTickerItem.css('marginLeft')) + parseInt(firstTickerItem.css('marginRight'));
+    this.firstItemWidth = this._getElementWidth(firstTickerItem);
 
     var tickerHeight = firstTickerItem.outerHeight();
     mask.css('height', tickerHeight + 'px');
@@ -94,7 +95,7 @@
       var item = $(this.element).children("li").eq(0).remove();
       $(this.element).append(item);
       this.currLeft += this.firstItemWidth;
-      this.firstItemWidth = item.outerWidth() + parseInt(item.css('marginLeft')) + parseInt(item.css('marginRight'));
+      this.firstItemWidth = this._getElementWidth(item);
     }
 
     // shift the ticker across
@@ -117,6 +118,12 @@
   //
   Plugin.prototype.stopScrolling = function() {
     window.clearInterval(this.tickerInterval);
+  };
+
+  //
+  Plugin.prototype._getElementWidth= function(el) {
+  	el = $(el);
+  	return el.outerWidth() + parseInt(el.css('marginLeft')) + parseInt(el.css('marginRight'));
   };
 
 
