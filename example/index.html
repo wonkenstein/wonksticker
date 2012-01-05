@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="ticker-container">
+<div id="example1" class="ticker-container">
   <ul class="ticker">
     <li>item number 1</li>
     <li>item number 2</li>
@@ -25,14 +25,45 @@
     <li>item number 8</li>
     <li>item number 9</li>
   </ul>
-<div>
+</div>
+
+<hr />
+<div id="example2" class="ticker-container">
+  <ul class="ticker">
+    <li>item number 1</li>
+    <li>item number 2</li>
+    <li>item number 3</li>
+    <li>item number 4</li>
+    <li>item number 5</li>
+    <li>item number 6</li>
+    <li>item number 7</li>
+    <li>item number 8</li>
+    <li>item number 9</li>
+  </ul>
+</div>
+
+<hr />
+<div id="example3" class="ticker-container">
+  <ul class="ticker-vertical">
+    <li>item number 1</li>
+    <li>item number 2</li>
+    <li>item number 3</li>
+    <li>item number 4</li>
+    <li>item number 5</li>
+    <li>item number 6</li>
+    <li>item number 7</li>
+    <li>item number 8</li>
+    <li>item number 9</li>
+  </ul>
+</div>
 
 
 
 <script type="text/javascript">
-/* js to start the ticker */
+/* js to start the tickers */
 $(document).ready(function(){
-  $('.ticker').wonksticker({});
+  $('#example1 .ticker').wonksticker();
+  $('#example2 .ticker').wonksticker({scroll:'right'});
 });
 </script>
 

@@ -11,3 +11,7 @@
 .ticker {background-color:#FFF;}
 
 .ticker li {float:left; list-style-type:none; margin:0 20px 0 0;}
+
+
+.ticker-vertical {background-color:#FFF; height:20px; overflow:hidden;}
+.ticker-vertical li {list-style-type:none; margin:0 0 20px 0;}
