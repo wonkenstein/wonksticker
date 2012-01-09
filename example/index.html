@@ -57,6 +57,21 @@
   </ul>
 </div>
 
+<hr />
+<div id="example4" class="ticker-container">
+  <ul class="ticker-vertical">
+    <li>item number 1</li>
+    <li>item number 2</li>
+    <li>item number 3</li>
+    <li>item number 4</li>
+    <li>item number 5</li>
+    <li>item number 6</li>
+    <li>item number 7</li>
+    <li>item number 8</li>
+    <li>item number 9</li>
+  </ul>
+</div>
+
 
 
 <script type="text/javascript">
@@ -64,6 +79,8 @@
 $(document).ready(function(){
   $('#example1 .ticker').wonksticker();
   $('#example2 .ticker').wonksticker({scroll:'right'});
+  $('#example4 ul').wonksticker({scroll:'up'});
+  $('#example3 ul').wonksticker({scroll:'down'});
 });
 </script>
 
