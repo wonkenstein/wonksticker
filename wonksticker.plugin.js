@@ -7,7 +7,7 @@
       increment : -2, // smoothness of the scrolling
       speed : 30, // higher the number, the slower it is
       tickerBuffer : 30,
-      tickerWidth: 0,
+      width: 0,
       scroll: 'left',
     };
 
@@ -22,10 +22,17 @@
     this.increment = this.options.increment;
     this.speed = this.options.speed;
     this.tickerBuffer = this.options.tickerBuffer;
-    this.tickerWidth = this.options.tickerWidth;
+    this.tickerWidth = this.options.width;
     this.scroll = this.options.scroll;
-    // captialise the scroll
-    this.scroll = this.scroll.charAt(0).toUpperCase() + this.scroll.slice(1)
+
+    // captialise the scroll to use for function names
+    this.scroll = this.scroll.charAt(0).toUpperCase() + this.scroll.slice(1);
+
+    this.dimensions = {
+    	itemMaxWidth : 0,
+    	itemMaxHeight : 0,
+    	tickerTapeLength : 0,
+    };
 
     this.currPos = 0;
     this.tickerInterval = 0;
@@ -38,7 +45,6 @@
 
 	//
   Plugin.prototype.init = function () {
-
     var ticker = $(this.element);
     var thisObj = this;
 
@@ -53,28 +59,7 @@
     mask.css('position', 'relative');
     mask.css('overflow', 'hidden');
 
-    // calculate and set how wide the ticker should be
-    var total_ticker_el_width = 0;
-    $('li', ticker).each(function(i){
-      total_ticker_el_width += thisObj._getElementWidth($(this));
-    });
-    total_ticker_el_width += this.tickerBuffer // add on buffer so IE behaves
-    ticker.css('width', total_ticker_el_width + 'px');
-
-
-    // set dimensions the ticker mask
-    var firstTickerItem = ticker.children().eq(0);
-    this.firstItemWidth = this._getElementWidth(firstTickerItem);
-
-    var tickerHeight = firstTickerItem.outerHeight();
-    mask.css('height', tickerHeight + 'px');
-    if (this.tickerWidth) {
-      mask.css('width', this.tickerWidth + 'px');
-    }
-    else {
-    	// default width
-      mask.css('width', (total_ticker_el_width - 2*this.firstItemWidth) + 'px');
-    }
+		this.horizontalTickerStyle(ticker, mask);
 
     // hover behaviours and start scrolling
     var thisObj = this;
@@ -88,16 +73,52 @@
   };
 
 
+	// get the dimensions of the ticker
+	Plugin.prototype._getTickerDimensions = function(ticker) {
+		var thisObj = this;
+
+    $('li', ticker).each(function(i){
+    	var w = thisObj._getElementWidth($(this));
+    	var h = $(this).height();
+
+      thisObj.dimensions.tickerTapeLength += w;
+
+      if (thisObj.dimensions.itemMaxWidth < w) {
+      	thisObj.dimensions.itemMaxWidth = w;
+      }
+      if (thisObj.dimensions.itemMaxHeight < h) {
+      	thisObj.dimensions.itemMaxHeight = h;
+      }
+    });
+
+    thisObj.dimensions.tickerTapeLength += this.tickerBuffer // add on buffer so IE behaves
+	};
+
+
+	// set up the styles for a horizontal ticker
+	Plugin.prototype.horizontalTickerStyle = function(ticker, mask) {
+
+		this._getTickerDimensions(ticker);
+		var tickerMaskWidth = (this.tickerWidth)
+											|| (this.dimensions.tickerTapeLength - (2*this.dimensions.itemMaxWidth));
+
+    ticker.css('width', this.dimensions.tickerTapeLength + 'px');
+
+    // set dimensions the ticker mask
+    mask.css('height', this.dimensions.itemMaxHeight + 'px');
+    mask.css('width', tickerMaskWidth + 'px');
+	};
+
+
   // scroll the ticker left
   Plugin.prototype.scrollLeft = function() {
     this.currPos += this.increment;
 
     // if first item has moved across enough then append it to end of list
-    if (this.currPos < (this.firstItemWidth * -1) - this.tickerBuffer) {
+    if (this.currPos < (this.dimensions.itemMaxWidth * -1) - this.tickerBuffer) {
       var item = $(this.element).children("li").eq(0).remove();
       $(this.element).append(item);
-      this.currPos += this.firstItemWidth;
-      this.firstItemWidth = this._getElementWidth(item);
+      this.currPos += this.dimensions.itemMaxWidth;
     }
 
     // shift the ticker across right
@@ -110,11 +131,10 @@
     this.currPos += this.increment;
 
     // if first item has moved across enough then append it to end of list
-    if (this.currPos < ((this.firstItemWidth * -1) - this.tickerBuffer)) {
+    if (this.currPos < ((this.dimensions.itemMaxWidth * -1) - this.tickerBuffer)) {
       var item = $(this.element).children("li").last().remove();
       $(this.element).prepend(item);
-      this.currPos += this.firstItemWidth;
-      this.firstItemWidth = this._getElementWidth(item);
+      this.currPos += this.dimensions.itemMaxWidth;
     }
 
     // shift the ticker across
