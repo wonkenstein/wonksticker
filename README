@@ -1,8 +1,17 @@
 Ticker jQuery plugin
 
-Continuous ticker, scrolls left to right
+Continuous ticker that can scroll horizontally, left to right or right to left
+Can also scroll vertically, top to bottom or bottom to top
 
-Try to keep css and html dependencies minimal
+Tried to keep css and html dependencies minimal, so you don't have to write much
+CSS and set up HTML.
 
-Make it scroll right to left?
-Scroll vertically?
+Options to set the following:
+* Height
+* Width
+* Speed
+* Scroll direction
+
+Only tested with jQuery 1.7
+
+Browsers: Mac Chrome, Mac Firefox, Mac Safari
