@@ -1,17 +1,23 @@
 /**/
+ul {margin:0; padding:0;}
+li {list-style-type:none;}
+
+
 .ticker-container {
-  background-color:#000;
+  background-color:#ccc;
   padding:10px;
+  border:1px solid #333;
+  margin-bottom:20px;
 }
 
 .ticker-mask {
-  margin:0 auto;
+  margin:0 auto; /* center the tickers - div inserted by plugin */
 }
 
 .ticker {background-color:#FFF;}
+.ticker li {margin:0 20px 0 0; padding:0;}
 
-.ticker li {float:left; list-style-type:none; margin:0 20px 0 0;}
+/* margins for a nicer verical ticker */
+.vertical li {margin:0 10px 20px 10px; }
 
-
-.ticker-vertical {background-color:#FFF; overflow:hidden;}
-.ticker-vertical li {list-style-type:none; margin:0 10px 20px 10px; padding:0 0 0 0;}
+.vertical {width:114px; float:left; margin-right:20px;}
