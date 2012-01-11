@@ -178,6 +178,7 @@
     $(this.element).css("top", this.currPos + "px");
   };
 
+
   // scroll the ticker down
   Plugin.prototype.scrollDown = function() {
     this.currPos += this.increment;
@@ -192,8 +193,6 @@
     // shift the ticker down
     $(this.element).css("bottom", this.currPos + "px");
   };
-
-
 
 
 	// DIMENSION FUNCTIONS
@@ -230,11 +229,13 @@
     thisObj.dimensions.tickerTapeLength += this.tickerBuffer // add on buffer so IE behaves
 	};
 
+
   // helper to get the width of an element including the margins
   Plugin.prototype._getElementWidth = function(el) {
   	el = $(el);
   	return el.outerWidth() + parseInt(el.css('marginLeft')) + parseInt(el.css('marginRight'));
   };
+
 
   // helper to get the height of an element including the margins
   Plugin.prototype._getElementHeight = function(el) {
