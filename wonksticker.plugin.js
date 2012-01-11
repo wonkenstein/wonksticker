@@ -103,6 +103,11 @@
 	// set up the styles for a horizontal ticker
 	Plugin.prototype.horizontalTickerStyle = function(ticker, mask) {
 
+		// float the li elements
+		$('li', ticker).each(function(i){
+			$(this).css('float', 'left');
+		});
+
 		this._getTickerDimensions(ticker);
 		var tickerMaskWidth = (this.tickerWidth)
 											|| (this.dimensions.tickerTapeLength - (2*this.dimensions.itemMaxWidth));
