@@ -248,7 +248,7 @@
   	return el.height() + parseInt(el.css('marginTop')) + parseInt(el.css('marginBottom'));
   };
 
-
+ 
   // A really lightweight plugin wrapper around the constructor,
   // preventing against multiple instantiations
   $.fn[pluginName] = function ( options ) {
