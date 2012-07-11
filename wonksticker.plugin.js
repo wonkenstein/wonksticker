@@ -33,7 +33,7 @@
     this.dimensions = {
     	itemMaxWidth : 0,
     	itemMaxHeight : 0,
-    	tickerTapeLength : 0,
+    	tickerTapeLength : 0
     };
 
     this.currPos = 0;
